@@ -14,4 +14,4 @@ var Tooltip = function() {
 		element.setAttribute('data-component', 'tooltip-hidden');
 	}
 	return api;
-}
+};
