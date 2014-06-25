@@ -55,18 +55,27 @@ var Drawer = function() {
 	}
 	return api;
 }
+var Tooltip = function() {
+	var api = {};
+	api.show = function(str) {
+		
+		return this;
+	}
+	return api;
+}
 var App = function() {
-	var d = Drawer();
+	var drawer = Drawer();
+	var tooltip = Tooltip();
 	CLI().on('command', function(data) {
 		var parts = data.command.split(/ /g);
 		var command = parts.shift();
-		if(d[command]) {
-			d[command].apply(d, parts);
+		if(drawer[command]) {
+			drawer[command].apply(drawer, parts);
 		} else {
 			console.log('there is no ' + command + ' command');
 		}
 	});
-
+	tooltip.show('blah');
 };
 (function(w) {
 	w.onload = function() {

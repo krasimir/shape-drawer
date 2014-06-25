@@ -1,9 +1,15 @@
 .c-bg-dark {
-	background: #E4E4E4;
+	background: #EFEFEF;
+}
+.c-bg-theme {
+	background: #ACD88B;
 }
 .c-bg-none {
 	background: none;
 }
 .c-border-dark {
 	border: solid 1px #B4B4B4;	
+}
+.c-border-top-arrow {
+	border-top: solid 10px #ACD88B;	
 }

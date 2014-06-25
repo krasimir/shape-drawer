@@ -1,0 +1,15 @@
+.tooltip {
+	position: absolute;
+	border-radius: 6px;
+	width: calc(100% - 40px);
+	top: -34px;
+}
+.tooltip .arrow {
+	position: absolute;
+	top: 40px;
+	left: 10px;
+	width: 0;
+	height: 0;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+}
