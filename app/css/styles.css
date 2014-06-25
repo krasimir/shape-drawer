@@ -1,9 +1,57 @@
 body, html {
 	width: 100%;
 	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+.bb, div {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+body, html {
 	font-size: 18px;
 	font-family: Arial;
 	line-height: 22px;
-	margin: 0;
-	padding: 0;
+}
+.fz-big {
+	font-size: 22px;
+	line-height: 26px;
+}
+.full-size {
+	width: 100%;
+	height: 100%;
+}
+.padd {
+	padding: 10px;
+}
+.padd-x2 {
+	padding: 20px;
+}
+.posr {
+	position: relative;
+}
+.c-bg-dark {
+	background: #E4E4E4;
+}
+.c-bg-none {
+	background: none;
+}
+.c-border-dark {
+	border: solid 1px #B4B4B4;	
+}
+.cli {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+}
+.cli input {
+	display: block;
+	width: 100%;
+	padding: 6px;
+	border-radius: 4px;
+}
+.plot {
+	
 }

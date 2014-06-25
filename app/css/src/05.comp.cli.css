@@ -1,0 +1,12 @@
+.cli {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+}
+.cli input {
+	display: block;
+	width: 100%;
+	padding: 6px;
+	border-radius: 4px;
+}

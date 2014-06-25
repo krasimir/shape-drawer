@@ -1,0 +1,13 @@
+.full-size {
+	width: 100%;
+	height: 100%;
+}
+.padd {
+	padding: 10px;
+}
+.padd-x2 {
+	padding: 20px;
+}
+.posr {
+	position: relative;
+}
