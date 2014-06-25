@@ -1,4 +1,5 @@
-shape-drawer
-============
+# ShapeDrawer
 
-Little web app that draws shapes on a page based on a user's commands
+---
+
+> Little web app that draws shapes on a page based on a user's commands
