@@ -29,3 +29,10 @@
 	-khtml-opacity: 0;
 	bottom: 90px;
 }
+.tooltip small {
+	font-size: 12px;
+	line-height: 14px;
+}
+.tooltip hr {
+	border-bottom: none;
+}

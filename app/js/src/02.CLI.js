@@ -2,7 +2,8 @@ var CLI = function() {
 	var api = {},
 		el = Utils.el,
 		field = el('[data-component="cli-input"]'),
-		listeners = {};
+		listeners = {},
+		lastCommand;
 
 	var parseCommand = function(str) {
 		var parts = str.split(/ /g);
@@ -15,17 +16,21 @@ var CLI = function() {
 
 	field.focus();
 	Utils.on(field, 'keyup', function(e) {
-		if(e.keyCode == 13) {
-			api.dispatch('command', parseCommand(field.value));
+		if(e.keyCode == 13) { // Enter
+			api.dispatch('command', parseCommand(lastCommand = field.value));
 			field.value = '';
-		} else {
+		} else { // any other
 			api.dispatch('update', parseCommand(field.value));
 		}
 	});
 	Utils.on(field, 'keydown', function(e) {
-		if(e.keyCode == 9) {
+		if(e.keyCode == 9) { // tab
 			e.preventDefault();
 			api.dispatch('autocomplete');
+		} else if(e.keyCode == 38) { // up
+			if(lastCommand) {
+				field.value = lastCommand;
+			}
 		}
 	});
 	api.on = function(event, cb) {

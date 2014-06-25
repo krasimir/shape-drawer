@@ -58,10 +58,6 @@ body, html {
 	padding: 6px;
 	border-radius: 4px;
 }
-.cli small {
-	font-size: 12px;
-	line-height: 14px;
-}
 .plot {
 	
 }
@@ -95,4 +91,11 @@ body, html {
 	-moz-opacity: 0;
 	-khtml-opacity: 0;
 	bottom: 90px;
+}
+.tooltip small {
+	font-size: 12px;
+	line-height: 14px;
+}
+.tooltip hr {
+	border-bottom: none;
 }

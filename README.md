@@ -45,6 +45,16 @@ We are using Gulp. It concatenates the CSS and the JavaScript to `app/css/styles
 * `rectangle` - draws a rectangle
 * `line` - draws a line
 * `fill` - flood filling
+* `circle` - draws a circle
+
+## Error handling
+
+The most critical part of the application is `app/js/src/03.Drawer.js`. Its execution is wrapped in `try-catch` block. So all the errors are sent to the user in the tooltip above the input field.
+
+## Key shortcuts
+
+* `Enter` sending the command
+* `Tab` autocomplete (if there is any match)
 
 ## Room for improvements
 

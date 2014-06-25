@@ -41,5 +41,18 @@ var Drawer = function() {
 		c.fillStyle = newColor || '#FFF';
 		fill(x, y, plot, c, newColor);
 	}
+	api.circle = function(x, y, radius, color, strokeColor) {
+		/*(circle x y radius color strokeColor) - draws a circle*/
+		if(arguments.length < 3) {
+			throw new Error('Missing parameters. The command "circle" requires at least 3 arguments.');
+		}
+		c.beginPath();
+		c.arc(x, y, radius, 0, 2 * Math.PI, false);
+		c.fillStyle = color || '#FFF';
+		c.fill();
+		c.lineWidth = 6;
+		c.strokeStyle = strokeColor || '#000';
+		c.stroke();
+	}
 	return api;
 }

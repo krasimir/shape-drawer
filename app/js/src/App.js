@@ -43,11 +43,14 @@ var App = function() {
 		if(matchedMethods.length > 0) {
 			var methodsStr = '', numOfMethods = matchedMethods.length;
 			for(var i=0; i<numOfMethods; i++) {
-				methodsStr += matchedMethods[i].name.replace(matchedMethods[i].part, '<strong><u>' + matchedMethods[i].part + '</u></strong>');
-				if(i < numOfMethods-1) methodsStr += ', ';
+				var entry = matchedMethods[i];
+				var desc = drawer[entry.name].toString().match(/\/\*(.*)+\*\//);
+				methodsStr += entry.name.replace(entry.part, '<strong><u>' + entry.part + '</u></strong>');
+				methodsStr += '<br /><small>' + desc[1] + '</small>';
+				if(i < numOfMethods-1) methodsStr += '<br />';
 			}
-			methodsStr += '. <small>(press the TAB key to grab the first match)</small>'
-			tooltip.show('Available methods: ' + methodsStr);
+			methodsStr += '<br /><hr /><small>(press the TAB key to grab the first match)</small>'
+			tooltip.show(methodsStr);
 		} else {
 			tooltip.hide();
 		}

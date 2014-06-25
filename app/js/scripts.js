@@ -16,7 +16,8 @@ var CLI = function() {
 	var api = {},
 		el = Utils.el,
 		field = el('[data-component="cli-input"]'),
-		listeners = {};
+		listeners = {},
+		lastCommand;
 
 	var parseCommand = function(str) {
 		var parts = str.split(/ /g);
@@ -29,17 +30,21 @@ var CLI = function() {
 
 	field.focus();
 	Utils.on(field, 'keyup', function(e) {
-		if(e.keyCode == 13) {
-			api.dispatch('command', parseCommand(field.value));
+		if(e.keyCode == 13) { // Enter
+			api.dispatch('command', parseCommand(lastCommand = field.value));
 			field.value = '';
-		} else {
+		} else { // any other
 			api.dispatch('update', parseCommand(field.value));
 		}
 	});
 	Utils.on(field, 'keydown', function(e) {
-		if(e.keyCode == 9) {
+		if(e.keyCode == 9) { // tab
 			e.preventDefault();
 			api.dispatch('autocomplete');
+		} else if(e.keyCode == 38) { // up
+			if(lastCommand) {
+				field.value = lastCommand;
+			}
 		}
 	});
 	api.on = function(event, cb) {
@@ -102,6 +107,19 @@ var Drawer = function() {
 		}
 		c.fillStyle = newColor || '#FFF';
 		fill(x, y, plot, c, newColor);
+	}
+	api.circle = function(x, y, radius, color, strokeColor) {
+		/*(circle x y radius color strokeColor) - draws a circle*/
+		if(arguments.length < 3) {
+			throw new Error('Missing parameters. The command "circle" requires at least 3 arguments.');
+		}
+		c.beginPath();
+		c.arc(x, y, radius, 0, 2 * Math.PI, false);
+		c.fillStyle = color || '#FFF';
+		c.fill();
+		c.lineWidth = 6;
+		c.strokeStyle = strokeColor || '#000';
+		c.stroke();
 	}
 	return api;
 }
@@ -294,11 +312,14 @@ var App = function() {
 		if(matchedMethods.length > 0) {
 			var methodsStr = '', numOfMethods = matchedMethods.length;
 			for(var i=0; i<numOfMethods; i++) {
-				methodsStr += matchedMethods[i].name.replace(matchedMethods[i].part, '<strong><u>' + matchedMethods[i].part + '</u></strong>');
-				if(i < numOfMethods-1) methodsStr += ', ';
+				var entry = matchedMethods[i];
+				var desc = drawer[entry.name].toString().match(/\/\*(.*)+\*\//);
+				methodsStr += entry.name.replace(entry.part, '<strong><u>' + entry.part + '</u></strong>');
+				methodsStr += '<br /><small>' + desc[1] + '</small>';
+				if(i < numOfMethods-1) methodsStr += '<br />';
 			}
-			methodsStr += '. <small>(press the TAB key to grab the first match)</small>'
-			tooltip.show('Available methods: ' + methodsStr);
+			methodsStr += '<br /><hr /><small>(press the TAB key to grab the first match)</small>'
+			tooltip.show(methodsStr);
 		} else {
 			tooltip.hide();
 		}
