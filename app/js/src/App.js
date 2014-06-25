@@ -1,6 +1,5 @@
 var App = function() {
-	var drawer = Drawer();
-	var tooltip = Tooltip();
+	var drawer = Drawer(), tooltip = Tooltip();
 	CLI().on('command', function(data) {
 		var parts = data.command.split(/ /g);
 		var command = parts.shift();
@@ -10,7 +9,6 @@ var App = function() {
 			console.log('there is no ' + command + ' command');
 		}
 	});
-	tooltip.show('blah');
 };
 (function(w) {
 	w.onload = function() {

@@ -1,6 +1,6 @@
 var Utils = {
-	el: function(selector) {
-		return document && document.querySelector(selector);
+	el: function(selector, parent) {
+		return (parent || document).querySelector(selector);
 	},
 	on: function(obj, evt, fnc) {
 	    if (obj.addEventListener) { // W3C model

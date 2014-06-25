@@ -1,6 +1,6 @@
 var Utils = {
-	el: function(selector) {
-		return document && document.querySelector(selector);
+	el: function(selector, parent) {
+		return (parent || document).querySelector(selector);
 	},
 	on: function(obj, evt, fnc) {
 	    if (obj.addEventListener) { // W3C model
@@ -56,16 +56,19 @@ var Drawer = function() {
 	return api;
 }
 var Tooltip = function() {
-	var api = {};
+	var api = {}, element = Utils.el('[data-component^="tooltip"]');
 	api.show = function(str) {
-		
+		element.setAttribute('data-component', 'tooltip-visible');
+		Utils.el('span', element).innerHTML = str;
 		return this;
+	}
+	api.hide = function() {
+		element.setAttribute('data-component', 'tooltip-hidden');
 	}
 	return api;
 }
 var App = function() {
-	var drawer = Drawer();
-	var tooltip = Tooltip();
+	var drawer = Drawer(), tooltip = Tooltip();
 	CLI().on('command', function(data) {
 		var parts = data.command.split(/ /g);
 		var command = parts.shift();
@@ -75,7 +78,6 @@ var App = function() {
 			console.log('there is no ' + command + ' command');
 		}
 	});
-	tooltip.show('blah');
 };
 (function(w) {
 	w.onload = function() {
