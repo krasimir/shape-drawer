@@ -86,7 +86,7 @@ var Drawer = function() {
 	api.line = function(x1, y1, x2, y2, color) {
 		/*(rectangle x1 y1 x2 y2 color) - Draws a rectangle*/
 		if(arguments.length < 4) {
-			throw new Error('Missing parameters. The command "rectangle" requires at least 4 arguments.');
+			throw new Error('Missing parameters. The command "line" requires at least 4 arguments.');
 		}
 		c.beginPath();
 	    c.moveTo(x1, y1);
