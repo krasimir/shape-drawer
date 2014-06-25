@@ -10,12 +10,12 @@ The application uses Gulp for CSS and JS concatenation so:
 
 ```
 npm install
-gulp
+gulp	
 ```
 
 ## Builds
 
-The build version of the app is available as `drawing.html` file in the main repository folder.
+The build version of the app is available as `drawing.html` file in the main repository's folder.
 
 ## Room for improvements
 
