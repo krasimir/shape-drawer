@@ -12,8 +12,5 @@ var Drawer = function() {
 		c.fillStyle = color || '#FFF';
 		c.fillRect(0, 0, plotW, plotH);
 	}
-	api.commands = function() {
-		
-	}
 	return api;
 }

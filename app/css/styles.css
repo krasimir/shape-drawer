@@ -58,6 +58,9 @@ body, html {
 	padding: 6px;
 	border-radius: 4px;
 }
+.cli small {
+	font-size: 12px;
+}
 .plot {
 	
 }
@@ -69,7 +72,7 @@ body, html {
 }
 .tooltip .arrow {
 	position: absolute;
-	top: 40px;
+	bottom: -9px;
 	left: 10px;
 	width: 0;
 	height: 0;
@@ -82,7 +85,7 @@ body, html {
 	opacity: 1;
 	-moz-opacity: 1;
 	-khtml-opacity: 1;
-	top: -34px;
+	bottom: 78px;
 }
 [data-component="tooltip-hidden"] {
 	filter: alpha(opacity=0);
@@ -90,5 +93,5 @@ body, html {
 	opacity: 0;
 	-moz-opacity: 0;
 	-khtml-opacity: 0;
-	top: -64px;
+	bottom: 90px;
 }

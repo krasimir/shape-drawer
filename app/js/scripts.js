@@ -74,9 +74,6 @@ var Drawer = function() {
 		c.fillStyle = color || '#FFF';
 		c.fillRect(0, 0, plotW, plotH);
 	}
-	api.commands = function() {
-		
-	}
 	return api;
 }
 var Tooltip = function() {
@@ -97,11 +94,23 @@ var Tooltip = function() {
 	return api;
 }
 var App = function() {
+
 	var drawer = Drawer(), 
 		tooltip = Tooltip(),
 		matchedMethods = [],
 		cli;
-	cli = CLI().on('command', function(data) {
+
+	var showAllAvailCommands = function() {
+		var methods = [];
+		for(var method in drawer) { methods.push(method); }
+		tooltip.show('<strong>Commands:</strong><br />' + methods.join('<br />'));
+	}
+
+	cli = CLI().on('command', function(data) {		
+		if(data.command === '?') {
+			showAllAvailCommands(); 
+			return;
+		}
 		matchedMethods = [];
 		tooltip.hide();
 		if(drawer[data.command]) {
@@ -135,7 +144,9 @@ var App = function() {
 			cli.setValue(matchedMethods[0].name);
 		}
 	});
+
 };
+
 (function(w) {
 	w.onload = function() {
 		App();
