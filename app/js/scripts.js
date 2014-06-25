@@ -75,6 +75,14 @@ var Drawer = function() {
 		c.fillStyle = color || '#FFF';
 		c.fillRect(0, 0, plotW, plotH);
 	}
+	api.rectangle = function(x, y, w, h, color) {
+		/*(rectangle x y w h color) - Draws a rectangle*/
+		if(arguments.length < 4) {
+			throw new Error('Missing parameters. The command "rectangle" requires at least 4 arguments.');
+		}
+		c.fillStyle = color || '#FFF';
+		c.fillRect(x, y, w, h);
+	}
 	return api;
 }
 var Tooltip = function() {
@@ -102,7 +110,7 @@ var App = function() {
 		cli;
 
 	var showAllAvailCommands = function() {
-		var methods = [], msg = '<strong>Commands:</strong><br />';
+		var methods = [], msg = '';
 		for(var method in drawer) {
 			var desc = drawer[method].toString().match(/\/\*(.*)+\*\//);
 			msg += method + '<br /><small>' + desc[1] + '</small><br />';
@@ -118,7 +126,11 @@ var App = function() {
 		matchedMethods = [];
 		tooltip.hide();
 		if(drawer[data.command]) {
-			drawer[data.command].apply(drawer, data.parts);
+			try {
+				drawer[data.command].apply(drawer, data.parts);
+			} catch(e) {
+				tooltip.show('Error: ' + e.message);
+			}
 		} else {
 			tooltip.show('Missing command "' + data.command + '"!', 2000);
 		}

@@ -21,3 +21,5 @@ The build version of the app is available as `drawing.html` file in the main rep
 
 * The Gulp setup uses temporary files for the CSS and JS content. It should be made with streams.
 * There are some cases where the output to the tooltip is formated with tags. This is done in the JavaScript part which is wrong. The visual look of the tooltip messages should be controlled only by the CSS.
+* The errors should be displayed differently
+* Most of the commands require numbers. There should be check for that.
