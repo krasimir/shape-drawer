@@ -9,6 +9,7 @@ var Utils = {
 	    } else if (obj.attachEvent) { // Microsoft model
 	        return obj.attachEvent('on' + evt, fnc);
 	    }
+	    return this;
 	}
 }
 var CLI = function() {
@@ -17,11 +18,28 @@ var CLI = function() {
 		field = el('[data-component="cli-input"]'),
 		listeners = {};
 
+	var parseCommand = function(str) {
+		var parts = str.split(/ /g);
+		var command = parts.shift();
+		return {
+			command: command,
+			parts: parts
+		}
+	}
+
 	field.focus();
-	Utils.on(field, 'keydown', function(e) {
+	Utils.on(field, 'keyup', function(e) {
 		if(e.keyCode == 13) {
-			api.dispatch('command', { command: field.value });
+			api.dispatch('command', parseCommand(field.value));
 			field.value = '';
+		} else {
+			api.dispatch('update', parseCommand(field.value));
+		}
+	});
+	Utils.on(field, 'keydown', function(e) {
+		if(e.keyCode == 9) {
+			e.preventDefault();
+			api.dispatch('autocomplete');
 		}
 	});
 	api.on = function(event, cb) {
@@ -37,6 +55,9 @@ var CLI = function() {
 		}
 		return api;
 	}
+	api.setValue = function(str) {
+		field.value = str;
+	}
 	return api;
 }
 var Drawer = function() {
@@ -50,32 +71,68 @@ var Drawer = function() {
 	c = plot.getContext('2d');
 
 	api.clear = function(color) {
-		c.fillStyle = color;
+		c.fillStyle = color || '#FFF';
 		c.fillRect(0, 0, plotW, plotH);
+	}
+	api.commands = function() {
+		
 	}
 	return api;
 }
 var Tooltip = function() {
-	var api = {}, element = Utils.el('[data-component^="tooltip"]');
-	api.show = function(str) {
+	var api = {}, element = Utils.el('[data-component^="tooltip"]'), interval;
+	api.show = function(str, hideAfter) {
 		element.setAttribute('data-component', 'tooltip-visible');
 		Utils.el('span', element).innerHTML = str;
+		clearTimeout(interval);
+		if(hideAfter) {
+			interval = setTimeout(api.hide, hideAfter);
+		}
 		return this;
 	}
 	api.hide = function() {
+		clearTimeout(interval);
 		element.setAttribute('data-component', 'tooltip-hidden');
 	}
 	return api;
 }
 var App = function() {
-	var drawer = Drawer(), tooltip = Tooltip();
-	CLI().on('command', function(data) {
-		var parts = data.command.split(/ /g);
-		var command = parts.shift();
-		if(drawer[command]) {
-			drawer[command].apply(drawer, parts);
+	var drawer = Drawer(), 
+		tooltip = Tooltip(),
+		matchedMethods = [],
+		cli;
+	cli = CLI().on('command', function(data) {
+		matchedMethods = [];
+		tooltip.hide();
+		if(drawer[data.command]) {
+			drawer[data.command].apply(drawer, data.parts);
 		} else {
-			console.log('there is no ' + command + ' command');
+			tooltip.show('Missing command "' + data.command + '"!', 2000);
+		}
+	}).on('update', function(data) {
+		var command = data.command;
+		matchedMethods = [];
+		for(var method in drawer) {
+			var regExp = new RegExp('^' + command.replace('?', '\\?'));
+			var match = method.toString().match(regExp);
+			if(match && match[0] !== '') {
+				matchedMethods.push({ name: method, part: match[0]});
+			}
+		}
+		if(matchedMethods.length > 0) {
+			var methodsStr = '', numOfMethods = matchedMethods.length;
+			for(var i=0; i<numOfMethods; i++) {
+				methodsStr += matchedMethods[i].name.replace(matchedMethods[i].part, '<strong><u>' + matchedMethods[i].part + '</u></strong>');
+				if(i < numOfMethods-1) methodsStr += ', ';
+			}
+			methodsStr += '. <small>(press the TAB key to grab the first match)</small>'
+			tooltip.show('Available methods: ' + methodsStr);
+		} else {
+			tooltip.hide();
+		}
+	}).on('autocomplete', function() {
+		if(matchedMethods.length > 0) {
+			cli.setValue(matchedMethods[0].name);
 		}
 	});
 };

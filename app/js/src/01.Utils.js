@@ -9,5 +9,6 @@ var Utils = {
 	    } else if (obj.attachEvent) { // Microsoft model
 	        return obj.attachEvent('on' + evt, fnc);
 	    }
+	    return this;
 	}
 }

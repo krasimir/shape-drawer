@@ -9,8 +9,11 @@ var Drawer = function() {
 	c = plot.getContext('2d');
 
 	api.clear = function(color) {
-		c.fillStyle = color;
+		c.fillStyle = color || '#FFF';
 		c.fillRect(0, 0, plotW, plotH);
+	}
+	api.commands = function() {
+		
 	}
 	return api;
 }

@@ -4,11 +4,28 @@ var CLI = function() {
 		field = el('[data-component="cli-input"]'),
 		listeners = {};
 
+	var parseCommand = function(str) {
+		var parts = str.split(/ /g);
+		var command = parts.shift();
+		return {
+			command: command,
+			parts: parts
+		}
+	}
+
 	field.focus();
-	Utils.on(field, 'keydown', function(e) {
+	Utils.on(field, 'keyup', function(e) {
 		if(e.keyCode == 13) {
-			api.dispatch('command', { command: field.value });
+			api.dispatch('command', parseCommand(field.value));
 			field.value = '';
+		} else {
+			api.dispatch('update', parseCommand(field.value));
+		}
+	});
+	Utils.on(field, 'keydown', function(e) {
+		if(e.keyCode == 9) {
+			e.preventDefault();
+			api.dispatch('autocomplete');
 		}
 	});
 	api.on = function(event, cb) {
@@ -23,6 +40,9 @@ var CLI = function() {
 			}
 		}
 		return api;
+	}
+	api.setValue = function(str) {
+		field.value = str;
 	}
 	return api;
 }
