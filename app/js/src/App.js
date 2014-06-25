@@ -6,9 +6,12 @@ var App = function() {
 		cli;
 
 	var showAllAvailCommands = function() {
-		var methods = [];
-		for(var method in drawer) { methods.push(method); }
-		tooltip.show('<strong>Commands:</strong><br />' + methods.join('<br />'));
+		var methods = [], msg = '<strong>Commands:</strong><br />';
+		for(var method in drawer) {
+			var desc = drawer[method].toString().match(/\/\*(.*)+\*\//);
+			msg += method + '<br /><small>' + desc[1] + '</small><br />';
+		}
+		tooltip.show(msg);
 	}
 
 	cli = CLI().on('command', function(data) {		

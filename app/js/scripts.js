@@ -71,6 +71,7 @@ var Drawer = function() {
 	c = plot.getContext('2d');
 
 	api.clear = function(color) {
+		/*(clear) - Sets the background color of the canvas*/
 		c.fillStyle = color || '#FFF';
 		c.fillRect(0, 0, plotW, plotH);
 	}
@@ -101,9 +102,12 @@ var App = function() {
 		cli;
 
 	var showAllAvailCommands = function() {
-		var methods = [];
-		for(var method in drawer) { methods.push(method); }
-		tooltip.show('<strong>Commands:</strong><br />' + methods.join('<br />'));
+		var methods = [], msg = '<strong>Commands:</strong><br />';
+		for(var method in drawer) {
+			var desc = drawer[method].toString().match(/\/\*(.*)+\*\//);
+			msg += method + '<br /><small>' + desc[1] + '</small><br />';
+		}
+		tooltip.show(msg);
 	}
 
 	cli = CLI().on('command', function(data) {		

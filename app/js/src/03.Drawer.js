@@ -9,6 +9,7 @@ var Drawer = function() {
 	c = plot.getContext('2d');
 
 	api.clear = function(color) {
+		/*(clear) - Sets the background color of the canvas*/
 		c.fillStyle = color || '#FFF';
 		c.fillRect(0, 0, plotW, plotH);
 	}
