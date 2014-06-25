@@ -2,7 +2,9 @@
 
 ---
 
-> Little web app that draws shapes on a page based on a user's commands
+Little web app that draws shapes on a page based on a user's commands.
+
+[Preview](http://work.krasimirtsonev.com/git/shape-drawer/drawing.html)
 
 ## Setup
 
@@ -53,8 +55,9 @@ The most critical part of the application is `app/js/src/03.Drawer.js`. Its exec
 
 ## Key shortcuts
 
-* `Enter` sending the command
-* `Tab` autocomplete (if there is any match)
+* `Enter` - sending the command
+* `Tab` - autocomplete (if there is any match)
+* `Up` - returns the last command
 
 ## Room for improvements
 
