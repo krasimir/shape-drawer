@@ -116,14 +116,18 @@ var CLI = function() {
 	return api;
 }
 var Drawer = function() {
-	var api = {},
-		plot = Utils.el('[data-component="plot"]'),
-		c = plot.getContext('2d');
+	var api = {}, c, plotW, plotH,
+		plot = Utils.el('[data-component="plot"]');
+
+	// setting the size of the canvas
+	plot.setAttribute('width', plotW = plot.parentNode.offsetWidth);
+	plot.setAttribute('height', plotH = plot.parentNode.offsetHeight);
+
+	c = plot.getContext('2d');
 
 	api.clear = function(color) {
-		console.log(arguments);
 		c.fillStyle = color;
-		c.fillRect(0, 0, 10, 10);
+		c.fillRect(0, 0, plotW, plotH);
 	}
 	return api;
 }
@@ -138,7 +142,6 @@ var App = function() {
 			console.log('there is no ' + command + ' command');
 		}
 	});
-
 
 };
 (function(w) {

@@ -10,7 +10,6 @@ var App = function() {
 		}
 	});
 
-
 };
 (function(w) {
 	w.onload = function() {
