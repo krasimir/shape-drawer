@@ -1,0 +1,16 @@
+{
+  "name": "shape-drawer",
+  "version": "0.0.1",
+  "description": "Little web app that draws shapes on a page based on a user's commands",
+  "author": {
+    "name": "Krasimir Tsonev",
+    "email": "info@krasimirtsonev.com",
+    "url": "http://krasimirtsonev.com"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "3.6.0",
+    "gulp-concat": "2.2.0",
+    "gulp-replace": "0.3.0"
+  }
+}
