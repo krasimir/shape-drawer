@@ -69,14 +69,33 @@ body, html {
         <div class="padd full-size posr">
             <div class="plot c-bg-dark full-size"></div>
             <div class="cli padd-x2">
-                <input type="text" class="bb c-border-dark fz-big">
+                <input type="text" class="bb c-border-dark fz-big" data-component="cli-input" tabindex="-1">
             </div>
         </div>
         <script>
 
-var App = function() {
-	
+var Utils = {
+	el: function(selector) {
+		return document && document.querySelector(selector);
+	}
 }
+var CLI = function() {
+	var api = {},
+		el = Utils.el,
+		field = el('[data-component="cli-input"]');
+
+	field.focus();
+
+	return api;
+}
+var App = function() {
+	cli = CLI();
+};
+(function(w) {
+	w.onload = function() {
+		App();
+	}
+})(window);
 
 		</script>
 
