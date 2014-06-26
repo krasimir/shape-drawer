@@ -65,3 +65,4 @@ The most critical part of the application is `app/js/src/03.Drawer.js`. Its exec
 * There are some cases where the output to the tooltip is formated with tags. This is done in the JavaScript part which is wrong. The visual look of the tooltip messages should be controlled only by the CSS.
 * The errors should be displayed differently
 * Most of the commands require numbers. There should be check for that.
+* There are no tests
